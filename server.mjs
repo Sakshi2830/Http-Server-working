@@ -12,3 +12,24 @@ const app = express()
  app.use(bp.json())//this allows us to parse json body of a POST request,we can actually see it as a json and not like bits of chunks that we have to add together like we did in http server
 
  app.use(morgan('dev'))//this gives the type of logging  that we want 
+
+ const db = []
+
+ app.post('/todo', (req,res) =>{
+     const newTodo = {
+         id: Date.now(),
+         text: req.body.text
+     }
+
+     db.push(newTodo)
+
+     res.json(newTodo)
+ })
+
+ app.get('/todo', (req,res) => {
+     res.json(db)
+ })
+
+ app.listen(8000, () => {
+     console.log('Server on http://localhost:8000')
+ })
